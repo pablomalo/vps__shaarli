@@ -1,0 +1,28 @@
+version: '3'
+
+networks:
+  proxynet:
+    external: true
+    
+volumes:
+  cache:
+  data:
+
+services:
+  app:
+    image: 'shaarli/shaarli:v0.12.1'
+    container_name: shaarli
+    hostname: shaarli
+    restart: 'unless-stopped'
+    env_file: .env
+    volumes:
+      - 'cache:/var/www/shaarli/cache'
+      - 'data:/var/www/shaarli/data'
+    networks:
+      - proxynet
+    labels:
+      - 'traefik.enable=true'
+      - 'traefik.http.routers.shaarli.rule=Host(`${HOSTNAME}`)'
+      - 'traefik.http.routers.shaarli.entryPoints=websecure'
+      - 'traefik.http.routers.shaarli.tls.certResolver=letsEncrypt'
+#      - 'traefik.port=8901'
