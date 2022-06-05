@@ -25,4 +25,3 @@ services:
       - 'traefik.http.routers.shaarli.rule=Host(`${HOSTNAME}`)'
       - 'traefik.http.routers.shaarli.entryPoints=websecure'
       - 'traefik.http.routers.shaarli.tls.certResolver=letsEncrypt'
-#      - 'traefik.port=8901'
